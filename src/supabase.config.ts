@@ -1,0 +1,2 @@
+export const SUPABASE_URL = 'https://acgtimaasxgvpitajfnz.supabase.co';
+export const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjZ3RpbWFhc3hndnBpdGFqZm56Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTUyMzI4OTksImV4cCI6MjAzMDgwODg5OX0.EUqmGxRfUq3fJ5xvSVgAMvZWANoFSoWDN3ECznzW6YU';
