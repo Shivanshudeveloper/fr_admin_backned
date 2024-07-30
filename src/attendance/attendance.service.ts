@@ -1,26 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_KEY, SUPABASE_URL } from 'src/supabase.config';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AttendanceService {
-    private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-    async getAllAttendance(): Promise<any> {
-        // const {data,error} = await this.supabase
-        // .from('time')
-        // .select('*')
-        // .order('id', {ascending: false});
-        // if(error){
-        //     console.log(error);
-        //     throw error;
-        // }
-        // console.log(data);
-        // return data
+    constructor(private configService: ConfigService) {}
+    private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
 
+    async getAllAttendance(orgId:any): Promise<any> {
         // Fetch data from the first table
         const { data: table1Data, error: table1Error } = await this.supabase
             .from('time')
-            .select('*').order('id', { ascending: false });
-
+            .select('*').order('id', { ascending: false }).eq('user_Id',orgId);
         if (table1Error) {
             throw table1Error;
         }

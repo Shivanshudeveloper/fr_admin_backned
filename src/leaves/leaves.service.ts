@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_KEY } from 'src/supabase.config';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class LeavesService {
-    private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    constructor(private configService: ConfigService) {}
+    private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
     async getAllLeaves(): Promise<any> {
         const { data, error } = await this.supabase.from('leave').select('*').order('id', { ascending: false });
         if (error) {

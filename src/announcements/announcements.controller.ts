@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFile,UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFile,UseInterceptors } from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -6,9 +6,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class AnnouncementsController {
     constructor(private readonly announcementsService: AnnouncementsService) {}
 
-    @Get('/getAllAnnouncements')
-    async getAllAnnouncements() {
-        return await this.announcementsService.getAllAnnouncements();
+    @Get('/getAllAnnouncements/:orgId')
+    async getAllAnnouncements(@Param() param:any) {
+        return await this.announcementsService.getAllAnnouncements(param.orgId);
     }
 
     @Post('/createAnnouncement')

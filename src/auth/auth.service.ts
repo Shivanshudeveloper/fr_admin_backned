@@ -1,17 +1,20 @@
 import { Injectable,UnauthorizedException } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_URL,SUPABASE_KEY } from 'src/supabase.config';
 import { Request,Response } from 'express';
+import { ConfigService } from '@nestjs/config';
+import { FRONTEND_URL } from 'src/config';
 
 @Injectable()
 export class AuthService {
-    private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    // private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    constructor(private configService: ConfigService) {}
+    private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
 
     async signInWithGoogle(): Promise<any> {
         const {data,error} = await this.supabase.auth.signInWithOAuth({
             provider: 'google',
             options:{
-                redirectTo: 'http://localhost:5173/auth/google/callback',
+                redirectTo: `${FRONTEND_URL}/auth/google/callback`,
                 queryParams: {
                     access_type: 'offline',
                     prompt: 'consent',

@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_KEY,SUPABASE_URL } from 'src/supabase.config';
 import { getGMTOffset } from 'utils/utils';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class OrganizationService {
-    private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    // private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    constructor(private configService: ConfigService) {}
+    private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
     async getOrganization(email: string) {
         const { data, error } = await this.supabase.from('organizationRegister').select('*').eq('email', email);
         if (error) {

@@ -1,13 +1,13 @@
-import { Controller,Get } from '@nestjs/common';
+import { Controller,Get, Param } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 @Controller('attendance')
 export class AttendanceController {
     constructor(private attendanceService: AttendanceService) { }
 
-    @Get('/getAllAttendance')
-    async getAllAttendance(): Promise<any> {
+    @Get('/getAllAttendance/:orgId')
+    async getAllAttendance(@Param() param:any): Promise<any> {
         try {
-            return await this.attendanceService.getAllAttendance();
+            return await this.attendanceService.getAllAttendance(param.orgId);
         } catch (error) {
             return {
                 success: false,

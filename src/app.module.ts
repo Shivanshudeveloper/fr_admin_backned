@@ -11,9 +11,12 @@ import { AnnouncementsModule } from './announcements/announcements.module';
 import { HolidaysModule } from './holidays/holidays.module';
 import { WorkShiftsModule } from './work-shifts/work-shifts.module';
 import { OrganizationModule } from './organization/organization.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UserModule, AuthModule, MembersModule, GroupsModule, LocationsModule, DevicesModule, LeavesModule, AttendanceModule, AnnouncementsModule, HolidaysModule, WorkShiftsModule, OrganizationModule],
+  imports: [UserModule, AuthModule, MembersModule, GroupsModule, LocationsModule, DevicesModule, LeavesModule, AttendanceModule, AnnouncementsModule, HolidaysModule, WorkShiftsModule, OrganizationModule,ConfigModule.forRoot({
+    isGlobal:true
+  })],
   controllers: [],
   providers: [],
 })

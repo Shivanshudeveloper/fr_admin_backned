@@ -1,13 +1,13 @@
-import { Controller, Get, Post, UseInterceptors, UploadedFile, Body } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors, UploadedFile, Body, Param } from '@nestjs/common';
 import { MembersService } from './members.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('members')
 export class MembersController {
     constructor(private membersService: MembersService) { }
 
-    @Get('/getAllMembers')
-    getAllMembers(): Promise<any> {
-        return this.membersService.getAllMembers();
+    @Get('/getAllMembers/:orgId')
+    getAllMembers(@Param() param:any): Promise<any> {
+        return this.membersService.getAllMembers(param.orgId);
     }
 
     @Post('/addMember')
