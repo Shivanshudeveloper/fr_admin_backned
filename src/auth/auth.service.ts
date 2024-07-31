@@ -11,6 +11,7 @@ export class AuthService {
     private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
 
     async signInWithGoogle(): Promise<any> {
+        console.log(`${FRONTEND_URL}/auth/google/callback`);
         const {data,error} = await this.supabase.auth.signInWithOAuth({
             provider: 'google',
             options:{
