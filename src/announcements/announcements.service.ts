@@ -4,14 +4,22 @@ import { ConfigService } from '@nestjs/config';
 // import { SUPABASE_KEY, SUPABASE_URL } from 'src/supabase.config';
 @Injectable()
 export class AnnouncementsService {
-    constructor(private configService: ConfigService) {}
+    constructor(private configService: ConfigService) { }
     // let SUPABASE_URL= 
     // let SUPABASE_KEY= this.configService.get<string>('DATABASE_URL');
 
-    private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
-    
-    async getAllAnnouncements(orgId:any): Promise<any> {
-        const { data, error } = await this.supabase.from('add_announcements').select('*').eq('user_id',orgId);
+    private supabase = createClient(this.configService.get<string>('SUPABASE_URL'), this.configService.get<string>('SUPABASE_KEY'));
+
+    async getAllAnnouncements(orgId: any): Promise<any> {
+        const { data, error } = await this.supabase.from('add_announcements').select('*').eq('user_id', orgId);
+        if (error) {
+            throw error;
+        }
+        return data;
+    }
+
+    async removeAnnouncement(id: any): Promise<any> {
+        const { data, error } = await this.supabase.from('add_announcements').delete().eq('id', id);
         if (error) {
             throw error;
         }

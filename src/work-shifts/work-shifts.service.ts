@@ -6,9 +6,9 @@ export class WorkShiftsService {
     // private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     constructor(private configService: ConfigService) {}
     private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
-    async getAllWorkShifts(): Promise<any> {
+    async getAllWorkShifts(orgId:any): Promise<any> {
         try {
-            const { data, error } = await this.supabase.from('work_shift').select('*');
+            const { data, error } = await this.supabase.from('work_shift').select('*').eq('user_id', orgId);
             if (error) {
                 throw new Error(error.message);
             }

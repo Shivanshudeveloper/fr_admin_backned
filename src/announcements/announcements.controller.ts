@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFile,UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile,UseInterceptors } from '@nestjs/common';
 import { AnnouncementsService } from './announcements.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -17,5 +17,10 @@ export class AnnouncementsController {
         @UploadedFile() file:Express.Multer.File,
         @Body() body: any){
         await this.announcementsService.createAnnouncement(body,file);
+    }
+
+    @Delete('/removeAnnouncement/:id')
+    async removeAnnouncement(@Param() param:any){
+        await this.announcementsService.removeAnnouncement(param.id);
     }
 }

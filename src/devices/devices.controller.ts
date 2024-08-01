@@ -1,12 +1,12 @@
-import { Body, Controller,Get, Post } from '@nestjs/common';
+import { Body, Controller,Get, Param, Post } from '@nestjs/common';
 import { DevicesService } from './devices.service';
 @Controller('devices')
 export class DevicesController {
     constructor(private devicesService: DevicesService) { }
 
-    @Get('/getAllDevices')
-    getAllDevices(): Promise<any> {
-        return this.devicesService.getAllDevices();
+    @Get('/getAllDevices/:orgId')
+    getAllDevices(@Param() param:any): Promise<any> {
+        return this.devicesService.getAllDevices(param.orgId);
     }
 
     @Post('/addDevice')

@@ -4,10 +4,10 @@ import { LeavesService } from './leaves.service';
 export class LeavesController {
     constructor(private leavesService: LeavesService) { }
 
-    @Get('/getAllLeaves')
-    async getAllLeaves(): Promise<any> {
+    @Get('/getAllLeaves/:orgId')
+    async getAllLeaves(@Param() param:any): Promise<any> {
         try {
-            return await this.leavesService.getAllLeaves();
+            return await this.leavesService.getAllLeaves(param.orgId);
         } catch (error) {
             return {
                 success: false,

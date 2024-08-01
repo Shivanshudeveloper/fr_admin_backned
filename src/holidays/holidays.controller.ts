@@ -1,12 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { HolidaysService } from './holidays.service';
 @Controller('holidays')
 export class HolidaysController {
     constructor(private readonly holidaysService: HolidaysService) {}
 
-    @Get('/getAllHolidays')
-    async getAllHolidays() {
-        return await this.holidaysService.getAllHolidays();
+    @Get('/getAllHolidays/:orgId')
+    async getAllHolidays(@Param() param: any) {
+        return await this.holidaysService.getAllHolidays(param.orgId);
     }
 
     @Post('/createHoliday')

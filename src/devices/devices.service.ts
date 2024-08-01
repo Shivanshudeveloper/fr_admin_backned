@@ -6,8 +6,9 @@ export class DevicesService {
     // private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     constructor(private configService: ConfigService) {}
     private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
-    async getAllDevices(): Promise<any> {
-        const {data,error} = await this.supabase.from('add_devices').select('*').order('id', { ascending: false });
+    async getAllDevices(orgId:any): Promise<any> {
+        console.log(orgId);
+        const {data,error} = await this.supabase.from('add_devices').select('*').order('id', { ascending: false }).eq('user_id', orgId);
         if(error){
             throw error;
         }

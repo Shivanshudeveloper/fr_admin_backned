@@ -5,8 +5,8 @@ import { ConfigService } from '@nestjs/config';
 export class LeavesService {
     constructor(private configService: ConfigService) {}
     private supabase = createClient(this.configService.get<string>('SUPABASE_URL'),this.configService.get<string>('SUPABASE_KEY'));
-    async getAllLeaves(): Promise<any> {
-        const { data, error } = await this.supabase.from('leave').select('*').order('id', { ascending: false });
+    async getAllLeaves(orgId:any): Promise<any> {
+        const { data, error } = await this.supabase.from('leave').select('*').order('id', { ascending: false }).eq('user_id', orgId);
         if (error) {
             console.log(error);
             throw error;
